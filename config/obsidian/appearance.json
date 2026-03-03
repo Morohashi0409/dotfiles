@@ -1,0 +1,9 @@
+{
+  "theme": "moonstone",
+  "textFontFamily": "Noto Sans JP",
+  "enabledCssSnippets": [
+    "task-emphasis"
+  ],
+  "cssTheme": "Primary",
+  "accentColor": ""
+}

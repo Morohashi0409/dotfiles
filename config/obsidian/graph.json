@@ -1,0 +1,30 @@
+{
+  "collapse-filter": false,
+  "search": "path:\"01_Daily/0_Category\" OR path:\"02_Notes\"",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "path:01_Daily/0_Category  ",
+      "color": {
+        "a": 1,
+        "rgb": 14725458
+      }
+    }
+  ],
+  "collapse-display": false,
+  "showArrow": false,
+  "textFadeMultiplier": 0.3,
+  "nodeSizeMultiplier": 0.5653564453125,
+  "lineSizeMultiplier": 1,
+  "collapse-forces": false,
+  "centerStrength": 0.507080078125,
+  "repelStrength": 10,
+  "linkStrength": 1,
+  "linkDistance": 250,
+  "scale": 1.2902662019598634,
+  "close": false
+}

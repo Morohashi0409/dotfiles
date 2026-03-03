@@ -1,0 +1,76 @@
+{
+  "version": 3,
+  "lines": [
+    [
+      {
+        "id": "model",
+        "type": "model",
+        "color": "cyan"
+      },
+      {
+        "id": "sep1",
+        "type": "separator"
+      },
+      {
+        "id": "ctx-pct",
+        "type": "context-percentage-usable",
+        "color": "yellow"
+      },
+      {
+        "id": "sep2",
+        "type": "separator"
+      },
+      {
+        "id": "tokens-total",
+        "type": "tokens-total",
+        "color": "magenta"
+      },
+      {
+        "id": "sep3",
+        "type": "separator"
+      },
+      {
+        "id": "cost",
+        "type": "session-cost",
+        "color": "green"
+      },
+      {
+        "id": "sep4",
+        "type": "separator"
+      },
+      {
+        "id": "clock",
+        "type": "session-clock",
+        "color": ""
+      },
+      {
+        "id": "flex",
+        "type": "flex-separator"
+      },
+      {
+        "id": "git-branch",
+        "type": "git-branch",
+        "color": "magenta"
+      },
+      {
+        "id": "sep5",
+        "type": "separator"
+      },
+      {
+        "id": "git-changes",
+        "type": "git-changes",
+        "color": "yellow"
+      },
+      {
+        "id": "sep6",
+        "type": "separator"
+      },
+      {
+        "id": "cwd",
+        "type": "current-working-dir",
+        "color": "blue"
+      }
+    ]
+  ],
+  "flexMode": "full-minus-40"
+}

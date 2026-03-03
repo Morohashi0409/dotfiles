@@ -1,0 +1,11 @@
+[user]
+	email = ymorohashi@armg.jp
+	name = Yuhei Morohashi
+[http]
+	postBuffer = 524288000
+[push]
+	autoSetupRemote = true
+[credential]
+	helper = osxkeychain
+[coderabbit]
+	machineId = cli/265478da887e4f0fa8c5dada4e928dd8
