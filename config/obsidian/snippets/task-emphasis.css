@@ -1,0 +1,70 @@
+/* =========================================================
+   Obsidian Task Emphasis — DARK + Live Preview (.cm-line) 版
+   - デフォルトテーマ / ナイトモード（body.theme-dark）
+   - Live Preview編集時は .cm-line を :has() で装飾
+   - 読み取りビューは従来通り data-task で装飾
+   ========================================================= */
+
+   body.theme-dark {
+    --task-warn-border: #f87171;             /* 未チェック：赤ライン */
+    --task-warn-bg: rgba(127,29,29,.30);     /* 未チェック：暗赤の薄背景 */
+    --task-done-border: #34d399;             /* 完了：緑ライン */
+    --task-done-bg: rgba(6,78,59,.30);       /* 完了：暗緑の薄背景 */
+    --task-radius: 8px;
+  }
+
+  /* ====== Live Preview（編集モード）：.cm-line を直接装飾 ====== */
+  @supports selector(.cm-line:has(input)) {
+    /* 未チェック行 */
+    body.theme-dark .markdown-source-view.mod-cm6 .cm-line:has(input.task-list-item-checkbox:not(:checked)) {
+      position: relative;
+      border-radius: var(--task-radius);
+      /* 左4pxライン + 薄背景（box-shadowで描くと文字位置がズレない） */
+      box-shadow:
+        inset 4px 0 0 0 var(--task-warn-border),
+        inset 0 0 0 9999px var(--task-warn-bg);
+    }
+
+    /* 完了行 */
+    body.theme-dark .markdown-source-view.mod-cm6 .cm-line:has(input.task-list-item-checkbox:checked) {
+      position: relative;
+      border-radius: var(--task-radius);
+      box-shadow:
+        inset 4px 0 0 0 var(--task-done-border),
+        inset 0 0 0 9999px var(--task-done-bg);
+      animation: task-tada .45s ease-out 1;
+    }
+
+    /* 小さな完了エフェクト（控えめ） */
+    @keyframes task-tada {
+      0%{transform:scale(.98);opacity:.85}
+      40%{transform:scale(1.02) rotate(-0.8deg);opacity:1}
+      100%{transform:scale(1)}
+    }
+  }
+
+  /* ====== フォールバック（:has()が効かない環境対策） ======
+     → 最低限、チェックボックス横にアイコンだけは出す */
+  body.theme-dark .markdown-source-view.mod-cm6 input.task-list-item-checkbox:not(:checked)::after {
+    content: "⚠";
+    margin-left: .35em;
+    color: #fecaca;
+    font-weight: 800;
+  }
+  body.theme-dark .markdown-source-view.mod-cm6 input.task-list-item-checkbox:checked::after {
+    content: "✨";
+    margin-left: .40em;
+    opacity: .9;
+  }
+
+  /* ====== 読み取りビュー（既存の data-task でOK） ====== */
+  body.theme-dark :is(.markdown-reading-view,.markdown-preview-view) li.task-list-item:not([data-task="x"]):not([data-task="X"]) {
+    border-left: 4px solid var(--task-warn-border);
+    border-radius: var(--task-radius);
+    box-shadow: inset 0 0 0 9999px var(--task-warn-bg);
+  }
+  body.theme-dark :is(.markdown-reading-view,.markdown-preview-view) li.task-list-item:is([data-task="x"],[data-task="X"]) {
+    border-left: 4px solid var(--task-done-border);
+    border-radius: var(--task-radius);
+    box-shadow: inset 0 0 0 9999px var(--task-done-bg);
+  }

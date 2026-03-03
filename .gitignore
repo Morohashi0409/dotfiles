@@ -1,0 +1,13 @@
+# Secrets
+.env
+*.pem
+id_rsa*
+*.key
+
+# OS
+.DS_Store
+DS_Store
+
+# Obsidian cache
+config/obsidian/workspace.json
+config/obsidian/workspace-mobile.json

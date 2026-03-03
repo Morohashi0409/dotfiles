@@ -1,0 +1,149 @@
+{
+  "env": {
+    "CLAUDE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "MISE_SHELL": "zsh",
+    "DIRENV_LOG_FORMAT": ""
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(rg:*)",
+      "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(echo:*)",
+      "Bash(printf:*)",
+      "Bash(mkdir:*)",
+      "Bash(cp:*)",
+      "Bash(mv:*)",
+      "Bash(rm:*)",
+      "Bash(touch:*)",
+      "Bash(chmod:*)",
+      "Bash(ln:*)",
+      "Bash(diff:*)",
+      "Bash(wc:*)",
+      "Bash(sort:*)",
+      "Bash(uniq:*)",
+      "Bash(sed:*)",
+      "Bash(awk:*)",
+      "Bash(jq:*)",
+      "Bash(yq:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "Bash(make:*)",
+      "Bash(cmake:*)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(pnpm:*)",
+      "Bash(yarn:*)",
+      "Bash(bun:*)",
+      "Bash(deno:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(pip:*)",
+      "Bash(pip3:*)",
+      "Bash(uv:*)",
+      "Bash(poetry:*)",
+      "Bash(ruby:*)",
+      "Bash(gem:*)",
+      "Bash(bundle:*)",
+      "Bash(go:*)",
+      "Bash(cargo:*)",
+      "Bash(rustc:*)",
+      "Bash(java:*)",
+      "Bash(mvn:*)",
+      "Bash(gradle:*)",
+      "Bash(docker:*)",
+      "Bash(docker-compose:*)",
+      "Bash(kubectl:*)",
+      "Bash(helm:*)",
+      "Bash(terraform:*)",
+      "Bash(aws:*)",
+      "Bash(gcloud:*)",
+      "Bash(az:*)",
+      "Bash(psql:*)",
+      "Bash(mysql:*)",
+      "Bash(redis-cli:*)",
+      "Bash(mise:*)",
+      "Bash(direnv:*)",
+      "Bash(brew:*)",
+      "Bash(open:*)",
+      "Bash(pbcopy:*)",
+      "Bash(pbpaste:*)",
+      "Bash(osascript:*)",
+      "Bash(date:*)",
+      "Bash(pwd:*)",
+      "Bash(env:*)",
+      "Bash(which:*)",
+      "Bash(type:*)",
+      "Bash(xargs:*)",
+      "Bash(tee:*)",
+      "Bash(tr:*)",
+      "Bash(cut:*)",
+      "Bash(basename:*)",
+      "Bash(dirname:*)",
+      "Bash(realpath:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "mcp__pencil"
+    ],
+    "deny": [
+      "Bash(sops:*)",
+      "Bash(op:*)",
+      "Bash(ssh:*)",
+      "Bash(scp:*)"
+    ]
+  },
+  "model": "opus",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/pre-tool-use.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash(git commit*)",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/post-commit.sh"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/notification.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "npx ccstatusline@latest",
+    "padding": 0
+  },
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true
+  },
+  "language": "ja",
+  "preferredNotifChannel": "terminal_bell"
+}

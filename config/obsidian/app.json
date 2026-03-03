@@ -1,0 +1,17 @@
+{
+  "promptDelete": false,
+  "trashOption": "local",
+  "newFileLocation": "current",
+  "newFileFolderPath": "Notes",
+  "attachmentFolderPath": "04_Document/5_Extra",
+  "alwaysUpdateLinks": true,
+  "readableLineLength": false,
+  "openBehavior": "daily",
+  "pdfExportSettings": {
+    "includeName": false,
+    "pageSize": "A4",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  }
+}

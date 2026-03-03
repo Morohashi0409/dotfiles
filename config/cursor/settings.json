@@ -1,0 +1,44 @@
+{
+    "diffEditor.ignoreTrimWhitespace": false,
+    "files.autoGuessEncoding": true,
+    "editor.formatOnSaveMode": "modificationsIfAvailable",
+    "[python]": {
+        "editor.formatOnType": false
+    },
+    "explorer.confirmDelete": false,
+    "github.copilot.chat.fixTestFailures": true,
+    "github.copilot.chat.scopeSelection": true,
+    "github.copilot.enable": {
+        "markdown": true
+    },
+    "workbench.activityBar.orientation": "vertical",
+    "workbench.colorTheme": "Default Light+",
+    "cursor.cpp.enablePartialAccepts": true,
+    "python.createEnvironment.trigger": "off",
+    "[scss]": {
+        "editor.defaultFormatter": "vscode.css-language-features"
+    },
+    "[vue]": {
+        "editor.defaultFormatter": "Vue.volar"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "explorer.confirmDragAndDrop": false,
+    "[dockercompose]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[github-actions-workflow]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "explorer.compactFolders": false,
+    "remote.SSH.remotePlatform": {
+        "wellcom": "linux"
+    }
+}
