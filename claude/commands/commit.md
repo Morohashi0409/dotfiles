@@ -1,3 +1,9 @@
+---
+description: コミット＆プッシュ（絵文字 Prefix 付き）
+depends-on:
+  - CLAUDE.md
+---
+
 あなたはプロエンジニアです。以下の方針でcommit, pushを実施してください。
 
 ## コミットメッセージの基本方針

@@ -11,7 +11,8 @@
 #   3. dotfiles/claude/settings.json    → ~/.claude/settings.json
 #   4. dotfiles/claude/commands/*.md    → ~/.claude/commands/*.md （個別リンク）
 #   5. dotfiles/claude/hooks/*.sh       → ~/.claude/hooks/*.sh （個別リンク）
-#   6. dotfiles/ccstatusline/settings.json → ~/.config/ccstatusline/settings.json
+#   6. dotfiles/claude/skills/*/        → ~/.claude/skills/*/ （ディレクトリ単位リンク）
+#   7. dotfiles/ccstatusline/settings.json → ~/.config/ccstatusline/settings.json
 #
 # 既存ファイルはバックアップしてからリンクを張る
 
@@ -72,13 +73,18 @@ if [[ -f "$DOTFILES_CLAUDE/settings.json" ]]; then
 fi
 
 # 3. commands/ — 個別にリンク（既存コマンドを残しつつ追加）
+# ※ $CLAUDE_HOME/commands がすでに dotfiles へのシンボリックリンクならスキップ
 if [[ -d "$DOTFILES_CLAUDE/commands" ]]; then
-  mkdir -p "$CLAUDE_HOME/commands"
-  for src in "$DOTFILES_CLAUDE/commands"/*.md; do
-    [[ -f "$src" ]] || continue
-    dst="$CLAUDE_HOME/commands/$(basename "$src")"
-    backup_and_link "$src" "$dst"
-  done
+  if [[ -L "$CLAUDE_HOME/commands" ]]; then
+    log_ok "commands/ は既にシンボリックリンク: $(readlink "$CLAUDE_HOME/commands") — スキップ"
+  else
+    mkdir -p "$CLAUDE_HOME/commands"
+    for src in "$DOTFILES_CLAUDE/commands"/*.md; do
+      [[ -f "$src" ]] || continue
+      dst="$CLAUDE_HOME/commands/$(basename "$src")"
+      backup_and_link "$src" "$dst"
+    done
+  fi
 fi
 
 # 4. hooks/ — 個別にリンク
@@ -91,7 +97,18 @@ if [[ -d "$DOTFILES_CLAUDE/hooks" ]]; then
   done
 fi
 
-# 5. ccstatusline 設定
+# 5. skills/ — ディレクトリ単位でリンク
+if [[ -d "$DOTFILES_CLAUDE/skills" ]]; then
+  mkdir -p "$CLAUDE_HOME/skills"
+  for src in "$DOTFILES_CLAUDE/skills"/*/; do
+    [[ -d "$src" ]] || continue
+    name="$(basename "$src")"
+    dst="$CLAUDE_HOME/skills/$name"
+    backup_and_link "$src" "$dst"
+  done
+fi
+
+# 6. ccstatusline 設定
 DOTFILES_ROOT="$(dirname "$DOTFILES_CLAUDE")"
 CCSTATUSLINE_SRC="$DOTFILES_ROOT/ccstatusline/settings.json"
 CCSTATUSLINE_DST="$HOME/.config/ccstatusline/settings.json"

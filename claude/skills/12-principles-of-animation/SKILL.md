@@ -6,6 +6,7 @@ metadata:
   author: raphael-salaja
   version: "2.0.0"
   source: /content/12-principles-of-animation/index.mdx
+user-invocable: true
 ---
 
 # 12 Principles of Animation

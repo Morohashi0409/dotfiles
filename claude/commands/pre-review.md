@@ -1,6 +1,8 @@
 ---
 description: 自動コードレビューとプレコミットのエージェントワークフロー
 globs: ["**/*"]
+depends-on:
+  - CLAUDE.md
 ---
 
 # /pre-review
