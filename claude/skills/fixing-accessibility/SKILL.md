@@ -1,6 +1,7 @@
 ---
 name: fixing-accessibility
 description: Fix accessibility issues.
+user-invocable: true
 ---
 
 # fixing-accessibility

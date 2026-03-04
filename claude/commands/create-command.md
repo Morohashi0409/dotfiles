@@ -1,6 +1,8 @@
 ---
 description: 新規コマンド（/〇〇）を dotfiles に作成する
 globs: ["**/*"]
+depends-on:
+  - CLAUDE.md
 ---
 
 # /create-command

@@ -1,6 +1,8 @@
 ---
 description: 現在の作業コンテキストをファイルに書き出し、次セッションへ引き継ぐ
 globs: ["**/*"]
+depends-on:
+  - CLAUDE.md
 ---
 
 # /handover

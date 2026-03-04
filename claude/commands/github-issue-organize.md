@@ -1,6 +1,8 @@
 ---
 description: PRの未解決コメントを整理し、回答・対応コミットを記録する
 globs: ["**/*"]
+depends-on:
+  - CLAUDE.md
 ---
 
 # /github-issue-organize

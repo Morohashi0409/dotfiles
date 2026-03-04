@@ -75,10 +75,12 @@ depends-on:
 
 ---
 
-## スキル一覧（~/dotfiles/claude/commands/）
+## コマンド一覧（~/dotfiles/claude/commands/）
 
-| スキル | 用途 |
-|--------|------|
+ユーザーが `/xxx` で明示的に呼び出すコマンド。
+
+| コマンド | 用途 |
+|----------|------|
 | `/handover` | 現在の進捗・文脈をファイルに書き出す |
 | `/continue` | handover ファイルから作業を再開する |
 | `/doc-check` | ドキュメントの差分チェック・更新 |
@@ -86,10 +88,20 @@ depends-on:
 | `/review` | コードレビュー |
 | `/pre-review` | コミット前の自動チェック |
 | `/doc` | 技術ドキュメント作成・整備 |
-| `/create-command` | 新規スキルを dotfiles に追加 |
-| `/frontend-design` | 高品質フロントエンドUI生成 |
-| `/fixing-accessibility` | アクセシビリティ修正 |
+| `/create-command` | 新規コマンドを dotfiles に追加 |
 | `/github-issue-organize` | PRコメントの整理・記録 |
+
+## スキル一覧（~/dotfiles/claude/skills/）
+
+Claude Code が自動トリガーする、または `/skill名` でも呼べるスキル。
+
+| スキル | 用途 |
+|--------|------|
+| `frontend-design` | 高品質フロントエンドUI生成 |
+| `fixing-accessibility` | アクセシビリティ修正 |
+| `12-principles-of-animation` | アニメーション品質の監査 |
+
+※ `baseline-ui`, `find-skills` は外部インストール（`~/.agents/skills/`）のため dotfiles 管理外。
 
 ---
 
