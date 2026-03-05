@@ -100,7 +100,7 @@
       "Bash(scp:*)"
     ]
   },
-  "model": "opus",
+  "model": "haiku",
   "hooks": {
     "PreToolUse": [
       {
@@ -125,6 +125,33 @@
       }
     ],
     "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/resily0808/.claude/hooks/haptic-trigger.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/notification.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/resily0808/.claude/hooks/haptic-trigger.sh"
+          }
+        ]
+      },
       {
         "matcher": "",
         "hooks": [
