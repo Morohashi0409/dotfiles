@@ -100,7 +100,7 @@
       "Bash(scp:*)"
     ]
   },
-  "model": "haiku",
+  "model": "opus",
   "hooks": {
     "PreToolUse": [
       {
