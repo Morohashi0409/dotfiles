@@ -1,0 +1,30 @@
+{
+  "context": "claude-code-audit-fix",
+  "timestamp": "2026-03-04T11:30:00+09:00",
+  "lastCommit": {
+    "sha": "388daf7",
+    "message": "【💡: refactor】 skills と commands の分離・frontmatter 統一・setup.sh 修正"
+  },
+  "currentTask": {
+    "description": "notification.sh の osascript キー送信が権限エラーで動作しない問題を調査済み。通知方式の変更またはアクセシビリティ権限の付与が必要。",
+    "status": "blocked",
+    "blockers": [
+      "osascript にキー操作の送信権限がない（アクセシビリティ権限未付与）。ターミナルアプリへの権限付与か、通知方式の変更が必要"
+    ]
+  },
+  "files": {
+    "modified": [
+      "claude/hooks/notification.sh",
+      "claude/settings.json"
+    ],
+    "created": [],
+    "deleted": []
+  },
+  "nextActions": [
+    "通知方式を決定する: (A) ターミナルアプリにアクセシビリティ権限を付与して osascript キー送信を使う or (B) terminal-notifier / macOS 標準通知など別方式に切り替える",
+    "notification.sh を選択した方式で修正する",
+    "notification.sh と settings.json の変更をコミットする",
+    "~/.claude/skills/ に残っている .bak ディレクトリ3つを手動削除する"
+  ],
+  "tokenUsage": "30k"
+}
