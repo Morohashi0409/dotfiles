@@ -1,3 +1,6 @@
+# Shell config (machine-local, may contain secrets)
+.zshrc
+
 # Secrets
 .env
 *.pem

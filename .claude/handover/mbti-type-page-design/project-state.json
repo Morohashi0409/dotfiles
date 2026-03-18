@@ -1,0 +1,27 @@
+{
+  "context": "mbti-type-page-design",
+  "timestamp": "2026-03-17T00:00:00+09:00",
+  "lastCommit": {
+    "sha": "057727b",
+    "message": "【🐛: fix】 全ボタン・リンクにカーソルポインターを適用"
+  },
+  "currentTask": {
+    "description": "rasisa/rashisa-ui.pen に MBTIタイプ別解説ページ（ISTP）のモバイルUI（462px）を新規フレームとして作成する。仕様書に従い11セクションを縦長スクロールで実装する。",
+    "status": "in_progress",
+    "blockers": []
+  },
+  "files": {
+    "modified": [],
+    "created": [
+      "rasisa/docs/superpowers/specs/2026-03-17-mbti-type-page-design.md"
+    ],
+    "deleted": []
+  },
+  "nextActions": [
+    "仕様書（2026-03-17-mbti-type-page-design.md）に基づいて rashisa-ui.pen に新規フレーム [MBTI] タイプ解説ページ（ISTP）を作成する",
+    "ヒーローセクション（②）→ 基本性格分析（③）→ 恋愛（④）→ 職場（⑤）→ 友人（⑥）→ 有名人（⑦）→ アニメキャラ（⑧）→ FAQ（⑨）→ CTA（⑩）→ 16タイプ一覧＆フッター（⑪）の順で上から実装する",
+    "各セクション作成後に get_screenshot で目視確認し、placeholder フラグを外してから次セクションに進む",
+    "全セクション完成後に writing-plans スキルで実装計画を作成する（コード実装フェーズへ）"
+  ],
+  "tokenUsage": "約90k"
+}
