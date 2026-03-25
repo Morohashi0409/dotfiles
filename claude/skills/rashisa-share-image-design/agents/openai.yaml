@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rashisa Share Image Design"
+  short_description: "Design or revise RASHISA share images, OGP/X card images"
+  default_prompt: "Use $rashisa-share-image-design to design or revise RASHISA share images, OGP/X card images, and header visuals."
