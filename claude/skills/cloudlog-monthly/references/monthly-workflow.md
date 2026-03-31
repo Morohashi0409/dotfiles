@@ -9,6 +9,7 @@ Use this flow when the user asks for monthly CloudLog preparation.
 - If attached files are not available, search `~/Downloads`.
 - Copy the chosen PDFs into `monthly-sources/YYYY-MM/` with canonical names.
 - If multiple candidates match, ask the user instead of choosing silently.
+- Make sure Daily notes for the month already exist under `01_Daily/`.
 
 ## 2. Build Monthly JSON
 
@@ -34,9 +35,11 @@ Use this flow when the user asks for monthly CloudLog preparation.
 ## 4. Automatic Entry
 
 - Use the validated monthly JSON as the input to `cloudlog_automator.py`.
-- The user should log into CloudLog in a Chrome debug window first.
+- The user should log into CloudLog in a Chrome debug window first and open the timesheet page.
+- Run `check_cloudlog_automator_ready.py` before the automator.
 - Automatic entry is the default path for this workflow.
 - Manual browser clicking is fallback only when the user explicitly asks for it.
+- Completion means saved days are confirmed, not just that the script was started.
 
 ## Questions To Surface
 
@@ -44,3 +47,4 @@ Use this flow when the user asks for monthly CloudLog preparation.
 - Which PDF is correct if multiple download candidates exist
 - How to classify a day when evidence is too weak
 - Whether the month-end incomplete day should be excluded or marked for later
+- Whether CloudLog categories or my-patterns changed since the previous month
