@@ -3,11 +3,101 @@
 月次の CloudLog 入力を end-to-end で進めるための skill です。
 この skill は「月次 JSON を作るだけ」ではなく、「CloudLog にその月を登録して、保存結果まで確認する」前提で使います。
 
-## 実行イメージ
+## 重要な前提
 
-<video controls src="/private/var/folders/4w/dd_2c5r1351g9mll057964wc0000gn/T/TemporaryItems/com.apple.Photos.NSItemProvider/uuid=A3BC3CD0-DCB1-46CF-95DC-08EE9FEC7242&code=001&library=1&type=3&mode=1&loc=true&cap=true.mov/画面収録 2026-03-31 18.05.54.mov"></video>
+この skill は意図的に `skill` ディレクトリ単体では完結しません。
 
-[動画を開く](/private/var/folders/4w/dd_2c5r1351g9mll057964wc0000gn/T/TemporaryItems/com.apple.Photos.NSItemProvider/uuid=A3BC3CD0-DCB1-46CF-95DC-08EE9FEC7242&code=001&library=1&type=3&mode=1&loc=true&cap=true.mov/画面収録%202026-03-31%2018.05.54.mov)
+ただし、`/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/` 配下の資料は、
+部内全員が読める共有ドキュメントではなく、現時点ではこのローカル環境で保持している運用資料です。
+そのため、部内共有向け README としては「そのパスを読めばよい」とは扱わず、
+skill 内の `README.md` / `SKILL.md` / `docs/` を共有向けの説明面にします。
+
+- skill 内に置くもの
+  - 実行フロー
+  - 停止条件
+  - 補助スクリプト
+  - 読み込むべき資料の順序
+- 外部の CloudLog 運用資料に置くもの
+  - 案件別カテゴリ一覧
+  - 自動入力の厳密な JSON 契約
+  - 別スレッドへ渡す実行テンプレート
+  - 実運用上の分類基準
+
+この分離を曖昧にしないために、README は人間向けの全体像、`SKILL.md` はエージェント向けの入口、`docs/` は skill の詳細資料として使います。
+
+## 誰が何を読むか
+
+- 月次入力を依頼する人
+  - この README
+  - `docs/user-preparation.md`
+  - `docs/conversation-guide.md`
+- skill を実行するエージェント
+  - `SKILL.md`
+  - `docs/source-of-truth.md`
+  - `docs/category-management.md`
+  - `references/`
+- skill を保守する人
+  - `docs/document-map.md`
+  - `docs/source-of-truth.md`
+  - この環境で参照できる場合のみ、外部の CloudLog 運用資料
+
+## ドキュメント構成
+
+- `README.md`
+  - 人間向けの概要、準備物、責務の切り分け
+- `SKILL.md`
+  - エージェント向けの実行入口
+  - 最初に読む資料と作業順
+- `docs/document-map.md`
+  - README、SKILL、docs、references、外部資料の役割分担
+- `docs/source-of-truth.md`
+  - 何を skill 内で持ち、何を外部正本に置くか
+- `docs/user-preparation.md`
+  - 実行依頼者、環境保持者、運用保守者ごとの準備事項
+- `docs/conversation-guide.md`
+  - 資料添付ベースでの会話例
+  - Chrome 起動や自動入力をチャットで依頼する例
+- `docs/category-management.md`
+  - `WellCom`、`one-platform`、`アドモニ` など案件別カテゴリの管理方針
+- `references/`
+  - パス規約、月次実行フロー、自動入力契約の要約
+
+## ローカル運用者向け外部正本
+
+この skill が参照する主な外部正本は次です。
+ただし、以下はこのローカル環境の運用資料であり、部内メンバーがそのまま参照できる前提ではありません。
+共有向けの説明は skill 内 docs に残し、実行時の厳密な正本としてのみ使います。
+
+- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/INDEX.md`
+  - CloudLog 側ドキュメントの索引
+- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/クラウドログ分類と運用ガイド.md`
+  - 案件別カテゴリと分類基準の正本
+- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/AUTOMATION_AND_JSON_CONTRACT.md`
+  - JSON 契約と automator の UI 契約の正本
+- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/README_cloudlog_automator.md`
+  - automator 単体の詳細 README
+- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/QUICKSTART.md`
+  - 環境立ち上げの quickstart
+- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/別スレッド用_月次入力テンプレート.md`
+  - 別スレッドへそのまま渡す実行テンプレートの正本
+- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/monthly-sources/`
+  - 月次入力に使う canonical PDF
+- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/monthly-json/`
+  - 月次 JSON の出力先
+
+## 部内共有向けに見る資料
+
+部内メンバーに共有する前提で見るべき資料は次です。
+
+- `README.md`
+- `docs/document-map.md`
+- `docs/source-of-truth.md`
+- `docs/user-preparation.md`
+- `docs/conversation-guide.md`
+- `docs/category-management.md`
+- `references/path-conventions.md`
+- `references/monthly-workflow.md`
+- `references/automatic-entry-contract.md`
 
 ## この skill がやること
 
@@ -23,246 +113,64 @@
 8. `cloudlog_automator.py` を実行して、保存できた日と失敗した日を確認する
 9. 一部の日だけ失敗した場合は、直せる範囲は修正して再実行する
 
-## ユーザーが用意するもの
+## 依頼者の準備物
+
+最低限、次を把握して依頼できる状態が必要です。
 
 - 対象月
-  例: `2026-03`
+  - 例: `2026-03`
 - Daily ノート
-  各営業日について、何をやったかが最低限わかる状態
+  - 各営業日について、何をやったかが最低限わかる状態
 - その月の勤怠 PDF 1 つ
-  添付するか `~/Downloads` に置く
+  - 添付するか `~/Downloads` に置く
 - その月の Outlook / Teams 予定 PDF 1 つ
-  添付するか `~/Downloads` に置く
+  - 添付するか `~/Downloads` に置く
 - カテゴリやマイパターンの変更情報
-  先月と CloudLog のカテゴリ構成が変わっていれば伝える
+  - 先月と CloudLog のカテゴリ構成が変わっていれば伝える
 - 自動入力までやる場合は、CloudLog にログイン済みの Chrome debug セッション
-  CloudLog の勤務表ページを開いた状態まで含む
+  - CloudLog の勤務表ページを開いた状態まで含む
 
-## 標準のファイル配置
+詳細は `docs/user-preparation.md` を参照してください。
 
-この skill では、月次データを次の形にそろえます。
+## この skill が前提にしないこと
 
-```text
-CloudLog/
-├── monthly-sources/
-│   └── YYYY-MM/
-│       ├── YYYY-MM_attendance.pdf
-│       └── YYYY-MM_outlook-calendar.pdf
-├── monthly-json/
-│   └── YYYY-MM_cloudlog.json
-├── check_cloudlog_automator_ready.py
-├── cloudlog_automator.py
-├── validate_json.py
-└── クラウドログ分類と運用ガイド.md
-```
-
-主なファイルの役割は以下です。
-
-- `validate_json.py`
-  - 作成した月次 JSON が CloudLog に保存できる形か確認する
-- `check_cloudlog_automator_ready.py`
-  - 自動入力を始めてよい状態か事前確認する
-- `cloudlog_automator.py`
-  - 月次 JSON を使って CloudLog へ自動入力し、保存処理まで進める
-- `クラウドログ分類と運用ガイド.md`
-  - 日ごとの作業内容をどのカテゴリに入れるか判断するための基準
-- `monthly-sources/YYYY-MM/`
-  - その月の勤怠 PDF と予定 PDF を置く場所
-- `monthly-json/YYYY-MM_cloudlog.json`
-  - その月の CloudLog 入力データ本体
-
-## 自動入力の前提条件
-
-`cloudlog_automator.py` を使う前に、次の状態が必要です。
-
-- Chrome が remote debugging 付きで起動している
-  - 例: `--remote-debugging-port=9222`
-- CloudLog にログイン済み
-- CloudLog の勤務表ページを開いている
-- `monthly-json/YYYY-MM_cloudlog.json` がある
-- `validate_json.py` が通っている
-- `check_cloudlog_automator_ready.py` が通っている
-
-Chrome の起動例:
-
-```bash
-/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
-  --remote-debugging-port=9222 \
-  --user-data-dir="/tmp/ChromeDebug"
-```
-
-## 推奨実行順
-
-自動入力までやる場合は、次の順で進めます。
-
-```bash
-python3 /Users/resily0808/dotfiles/claude/skills/cloudlog-monthly/scripts/prepare_monthly_sources.py 2026-03
-python3 /Users/resily0808/dotfiles/claude/skills/cloudlog-monthly/scripts/check_monthly_inputs.py 2026-03
-python3 /Users/resily0808/dotfiles/claude/skills/cloudlog-monthly/scripts/normalize_cloudlog_json.py /Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/monthly-json/2026-03_cloudlog.json --in-place
-python3 /Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/validate_json.py /Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/monthly-json/2026-03_cloudlog.json
-python3 /Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/check_cloudlog_automator_ready.py 2026-03
-python3 /Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/cloudlog_automator.py /Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/monthly-json/2026-03_cloudlog.json
-```
-
-この順を崩さず、validator と readiness check を通してから automator を流します。
-
-## JSON の最小イメージ
-
-`monthly-json/YYYY-MM_cloudlog.json` は、CloudLog に登録する日別データそのものです。
-
-```json
-[
-  {
-    "date": "2026-03-02",
-    "attendance": {
-      "clock_in": "10:05",
-      "clock_out": "19:00"
-    },
-    "cloudlog_entries": [
-      {
-        "category": "全社共通業務 > 商品や業務に紐づかない会議 > （アドモニ、本部会議）> 入力不要",
-        "minutes": 25,
-        "time_blocks": ["10:05-10:30"]
-      },
-      {
-        "category": "マイパターン登録済みの業務",
-        "minutes": 30,
-        "time_blocks": ["10:30-11:00"]
-      }
-    ],
-    "needs_confirmation": false
-  }
-]
-```
-
-見方のポイント:
-
-- 1 要素が 1 日分
-- `attendance` は勤怠時刻
-- `cloudlog_entries` は工数カテゴリの一覧
-- `time_blocks` の 1 件が CloudLog 上の 1 行になる
-- `minutes` は画面入力値ではなく、検証用の期待値
-- `needs_confirmation: true` の日は自動入力をスキップする
-- 全休など勤怠を入れない日は `attendance: null` にできる
-
-## `validate_json.py` が保証すること
-
-`validate_json.py` は、JSON が CloudLog 入力用として最低限成立しているかを確認します。
-
-主に見ているのは以下です。
-
-- `date` が `YYYY-MM-DD` 形式か
-- `attendance` が正しい形か
-- `clock_in` / `clock_out` が 5 分刻みか
-- `time_blocks` が `HH:MM-HH:MM` 形式か
-- `time_blocks` の開始・終了が 5 分刻みか
-- `minutes` が数値で 5 分単位か
-
-注意点:
-
-- warning だけなら終了コード `0` で通る
-- `time_blocks` 合計と `minutes` のズレなどは warning 扱いになることがある
-- warning が残っていると automator で保存失敗することがある
-
-つまり、validator は必須ですが、通っただけで完全に安全とは限りません。
-
-## `cloudlog_automator.py` がやること
-
-`cloudlog_automator.py` は、CloudLog の勤務表画面に対して次の操作をします。
-
-1. Chrome debug session に接続する
-2. CloudLog のタブを見つける
-3. 対象日を含む週に移動する
-4. その日の `編集` ボタンを押す
-5. `attendance` があれば勤務開始・終了を入力する
-6. `time_blocks` を 1 ブロックずつ工数行として追加する
-7. カテゴリを選ぶ
-8. サマリーを確認して `保存` を押す
-9. 保存できた日と失敗した日をログで出す
-
-カテゴリ選択は次の順です。
-
-- まずマイパターンで検索
-- 見つからなければ `>` 区切りの階層パスとして通常タブで選択
-
-## automator が実際に触る UI
-
-- CloudLog の勤務表ページ
-- 日別の `編集` ボタン
-- 勤務開始・終了入力欄
-- 工数行
-- カテゴリ picker
-- `保存` ボタン
-
-## 補足ドキュメント
-
-詳細を確認したい場合は、次も参照できます。
-
-- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/AUTOMATION_AND_JSON_CONTRACT.md`
-  - JSON 契約と自動入力の前提を詳しく説明したファイル
-- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/README_cloudlog_automator.md`
-  - `cloudlog_automator.py` 単体の詳しい README
-- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/別スレッド用_月次入力テンプレート.md`
-  - 他スレッドへそのまま渡す実行テンプレート
-
-## ユーザーがやらなくていいこと
+依頼者は次をやる必要はありません。
 
 - PDF のリネーム
 - `monthly-sources` への移動
 - JSON の 5 分刻み調整
 - JSON の整合性チェック
 - 自動入力前の細かい前処理
+- 案件カテゴリ文字列の skill 内同期
 
-## この skill が止まって質問する条件
+## 更新先のルール
 
-- PDF が見つからない
-- `~/Downloads` に候補 PDF が複数あって判別できない
-- Daily と GitHub を見ても、その日のカテゴリ配分が決め切れない
-- CloudLog 側のカテゴリやマイパターンが変わっていて、既存 JSON と一致しない
-- 月末最終日がまだ未確定
-- CloudLog の画面変更で automator が安全に続行できない
+何を変えたいかによって更新先を分けます。
 
-## 完了の定義
+- 実行手順や停止条件を変える
+  - `SKILL.md` または `references/`
+- ユーザー向けの説明を変える
+  - `README.md`
+- skill と外部正本の責務分担を変える
+  - `docs/source-of-truth.md`
+- `WellCom`、`one-platform`、`アドモニ` などの案件分類を変える
+  - 外部の `クラウドログ分類と運用ガイド.md`
+- 別スレッドに渡す依頼テンプレートを変える
+  - 外部の `別スレッド用_月次入力テンプレート.md`
 
-`YYYY-MM_cloudlog.json` ができた、だけでは完了ではありません。
+ローカル専用資料へのリンクを README に足す場合は、
+「部内全員が読める補足資料」と誤解されないよう、必ずローカル運用者向けであることを明記します。
 
-自動入力まで依頼された場合は、次の状態までを完了扱いにします。
+## 関連資料
 
-- JSON が validate 済み
-- automator 実行済み
-- 保存できた日が確認済み
-- 失敗日や保留日があれば理由つきで整理済み
-
-## 補助スクリプト
-
-使える補助スクリプトは以下です。
-
-- `scripts/prepare_monthly_sources.py`
-  - PDF を所定の場所へコピーし、決まった名前にそろえる
-- `scripts/check_monthly_inputs.py`
-  - 必要ファイルがそろっているか確認する
-- `scripts/normalize_cloudlog_json.py`
-  - JSON 内の時刻を 5 分刻みにそろえる
-- `check_cloudlog_automator_ready.py`
-  - 自動入力を始めてよい状態か事前確認する
-
-## 注意点
-
-- 作業メモの形式は人によって違って問題ありませんが、各営業日の作業内容が最低限わかる必要があります。
-- PDF は添付が最優先です。添付がなければ `~/Downloads` を見にいきます。
-- `attendance` と `time_blocks` は 5 分刻みにそろっていないと CloudLog に保存できません。
-- 自動入力を使う場合は、CloudLog にログイン済みで、勤務表ページを開いた Chrome debug セッションが必要です。
-- automator の終了コードは、全日成功で `0`、準備不足または一部日付失敗で `1` です。
-
-## よくある失敗
-
-- ブラウザ接続に失敗する
-  - Chrome が `--remote-debugging-port=9222` 付きで起動しているか確認する
-- CloudLog タブが見つからない
-  - 勤務表ページを開いてログイン済みか確認する
-- カテゴリが見つからない
-  - マイパターン未登録、または CloudLog 側のカテゴリ構成変更を疑う
-- 保存されたように見えて再読込すると消える
-  - `validate_json.py` を再実行し、5 分刻みと warning の有無を見直す
-- 編集ボタンが見つからない
-  - 対象週が合っていないか、CloudLog の UI が変わっている可能性がある
+- `docs/document-map.md`
+- `docs/source-of-truth.md`
+- `docs/user-preparation.md`
+- `docs/category-management.md`
+- `references/path-conventions.md`
+- `references/monthly-workflow.md`
+- `references/automatic-entry-contract.md`
+- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/INDEX.md`
+- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/README_cloudlog_automator.md`
+- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/AUTOMATION_AND_JSON_CONTRACT.md`
+- `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/クラウドログ分類と運用ガイド.md`

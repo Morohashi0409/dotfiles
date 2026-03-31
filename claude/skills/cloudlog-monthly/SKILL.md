@@ -9,10 +9,31 @@ description: Prepare monthly CloudLog source files, generate month JSON, validat
 
 Prepare one month of CloudLog inputs end to end. Standardize the source PDFs into fixed paths, generate `YYYY-MM_cloudlog.json`, normalize it for CloudLog's 5-minute constraints, validate it, and run the existing automation when the user wants the month entered into CloudLog.
 
-Read [references/path-conventions.md](references/path-conventions.md) for the fixed folder layout.
-Read [references/monthly-workflow.md](references/monthly-workflow.md) for the monthly flow and escalation rules.
-Read [references/automatic-entry-contract.md](references/automatic-entry-contract.md) for what the user must prepare and what "ready for automatic entry" means.
-Read `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/AUTOMATION_AND_JSON_CONTRACT.md` when you need the exact JSON contract for `validate_json.py` or the exact UI behavior of `cloudlog_automator.py`.
+This skill is not self-contained by design. Keep stable execution logic in this skill directory, and keep operational source-of-truth data in the external CloudLog documents under `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog`.
+
+Those external CloudLog documents are local operator docs for this machine, not generally accessible team-shared docs.
+Use them for execution when available in this environment, but do not describe them to teammates as if they are universally reachable.
+
+Before doing work, read these files in order:
+1. [docs/document-map.md](docs/document-map.md)
+2. [docs/source-of-truth.md](docs/source-of-truth.md)
+3. [docs/user-preparation.md](docs/user-preparation.md)
+4. [docs/category-management.md](docs/category-management.md)
+5. [references/path-conventions.md](references/path-conventions.md) for the fixed folder layout.
+6. [references/monthly-workflow.md](references/monthly-workflow.md) for the monthly flow and escalation rules.
+7. [references/automatic-entry-contract.md](references/automatic-entry-contract.md) for what the user must prepare and what "ready for automatic entry" means.
+8. `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/AUTOMATION_AND_JSON_CONTRACT.md` when you need the exact JSON contract for `validate_json.py` or the exact UI behavior of `cloudlog_automator.py`.
+9. `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/クラウドログ分類と運用ガイド.md` when category decisions are involved.
+
+## Boundary Rules
+
+- Keep execution flow, helper scripts, stopping rules, and reading order inside this skill.
+- Keep project-specific category mappings such as `WellCom`, `one-platform`, and `アドモニ` in the external category guide, not in `SKILL.md`.
+- Keep the exact automator UI contract and exact JSON contract in the external CloudLog documents, not in this skill.
+- Keep user-facing handoff templates in the external CloudLog documents, not in this skill.
+- If category mappings or my-patterns changed, ask the user instead of inventing new mappings.
+- If WellCom, one-platform, or アドモニ appears in the evidence, re-read the external category guide before classifying.
+- When writing or updating team-facing docs, summarize local-only external rules inside this skill directory instead of assuming teammates can open `/Users/...` paths.
 
 ## Use This Skill
 
@@ -30,6 +51,10 @@ Read `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/
 - Monthly JSON root: `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/monthly-json`
 - Category guide: `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/クラウドログ分類と運用ガイド.md`
 - Automation and JSON contract: `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/AUTOMATION_AND_JSON_CONTRACT.md`
+- Document index: `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/INDEX.md`
+- Automator README: `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/README_cloudlog_automator.md`
+- Quickstart: `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/QUICKSTART.md`
+- Thread handoff template: `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/別スレッド用_月次入力テンプレート.md`
 - JSON validator: `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/validate_json.py`
 - Auto entry script: `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/cloudlog_automator.py`
 
@@ -43,6 +68,7 @@ Read `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/
 3. Check readiness with `scripts/check_monthly_inputs.py`.
 4. Generate or update `monthly-json/YYYY-MM_cloudlog.json`.
    - Use Daily notes, the attendance PDF, the Outlook calendar PDF, GitHub activity, and the category guide.
+   - Do not invent project category strings inside this skill. Read them from the category guide.
    - Keep the input JSON minimal, but preserve `time_blocks`.
    - Before handing the JSON to CloudLog, normalize it to CloudLog-ready 5-minute increments.
    - Both `attendance` and every `time_blocks` boundary must be 5-minute aligned.
@@ -67,6 +93,8 @@ Read `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/
 - One Outlook or Teams calendar PDF for that month.
 - Any category or my-pattern changes that happened since the previous run.
 - For automatic entry, a logged-in Chrome debug session on CloudLog's timesheet page.
+
+See [docs/user-preparation.md](docs/user-preparation.md) for a role-based breakdown of what the monthly requester, environment owner, and CloudLog maintainer should each keep up to date.
 
 If the user attaches the PDFs in the thread, use those first. If not, look in `~/Downloads`. If both are missing or ambiguous, stop and ask.
 
