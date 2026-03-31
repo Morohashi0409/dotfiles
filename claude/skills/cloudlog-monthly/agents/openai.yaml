@@ -1,0 +1,4 @@
+interface:
+  display_name: "CloudLog Monthly"
+  short_description: "Prepare monthly CloudLog source files and generate month"
+  default_prompt: "Use $cloudlog-monthly to prepare monthly CloudLog source files and generate month JSON."
