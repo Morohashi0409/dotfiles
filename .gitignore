@@ -14,3 +14,6 @@ DS_Store
 # Obsidian cache
 config/obsidian/workspace.json
 config/obsidian/workspace-mobile.json
+
+# Obsidian plugin settings with local API credentials
+config/obsidian/plugins/obsidian-textgenerator-plugin/data.json
