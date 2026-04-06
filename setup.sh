@@ -7,12 +7,15 @@
 #
 # 対象:
 #   1. .zshrc
-#   2. .gitconfig
-#   3. .claude.json
-#   4. .wezterm.lua（存在する場合のみ）
-#   5. config/cursor/settings.json → ~/Library/Application Support/Cursor/User/settings.json
-#   6. config/obsidian/ → ~/Documents/Obsidian Vault/.obsidian（ディレクトリごとリンク）
-#   7. Claude 関連は claude/setup.sh に委任
+#   2. .zprofile
+#   3. changelog.config.js
+#   4. .gitconfig
+#   5. .claude.json
+#   6. .wezterm.lua（存在する場合のみ）
+#   7. config/cursor/settings.json → ~/Library/Application Support/Cursor/User/settings.json
+#   8. config/obsidian/ → ~/Documents/Obsidian Vault/.obsidian（ディレクトリごとリンク）
+#   9. Claude 関連は claude/setup.sh に委任
+#   10. Codex skills 関連は codex/setup.sh に委任
 
 set -euo pipefail
 
@@ -62,27 +65,41 @@ echo ""
 # 1. .zshrc
 backup_and_link "$DOTFILES/.zshrc" "$HOME/.zshrc"
 
-# 2. .gitconfig
+# 2. .zprofile
+backup_and_link "$DOTFILES/.zprofile" "$HOME/.zprofile"
+
+# 3. changelog.config.js
+backup_and_link "$DOTFILES/changelog.config.js" "$HOME/changelog.config.js"
+
+# 4. .gitconfig
 backup_and_link "$DOTFILES/.gitconfig" "$HOME/.gitconfig"
 
-# 3. .claude.json
+# 5. .claude.json
 backup_and_link "$DOTFILES/.claude.json" "$HOME/.claude.json"
 
-# 4. .wezterm.lua（存在する場合のみ）
+# 6. .wezterm.lua（存在する場合のみ）
 backup_and_link "$DOTFILES/.wezterm.lua" "$HOME/.wezterm.lua"
 
-# 5. Cursor settings.json
+# 7. Cursor settings.json
 backup_and_link "$DOTFILES/config/cursor/settings.json" "$HOME/Library/Application Support/Cursor/User/settings.json"
 
-# 6. Obsidian 設定ディレクトリ（ディレクトリごとリンク）
+# 8. Obsidian 設定ディレクトリ（ディレクトリごとリンク）
 backup_and_link "$DOTFILES/config/obsidian" "$HOME/Documents/Obsidian Vault/.obsidian"
 
-# 7. Claude 関連は claude/setup.sh に委任
+# 9. Claude 関連は claude/setup.sh に委任
 if [[ -f "$DOTFILES/claude/setup.sh" ]]; then
   echo ""
   bash "$DOTFILES/claude/setup.sh"
 else
   log_skip "claude/setup.sh が見つかりません"
+fi
+
+# 10. Codex skills 関連は codex/setup.sh に委任
+if [[ -f "$DOTFILES/codex/setup.sh" ]]; then
+  echo ""
+  bash "$DOTFILES/codex/setup.sh"
+else
+  log_skip "codex/setup.sh が見つかりません"
 fi
 
 echo ""

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rasisa Note Formatting"
+  short_description: "Use when converting a RASHISA article draft or markdown file"
+  default_prompt: "Use $rasisa-note-formatting to use when converting a RASHISA article draft or markdown file into a note-ready publish package with title, lead, image placement, captions, links, and CTA adjusted for note reading behavior."

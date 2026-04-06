@@ -1,0 +1,4 @@
+interface:
+  display_name: "Digital Dashboard Frontend"
+  short_description: "Build frontend dashboards from Digital Agency dashboard"
+  default_prompt: "Use $digital-dashboard-frontend to build frontend dashboards from Digital Agency dashboard guidance and assets."

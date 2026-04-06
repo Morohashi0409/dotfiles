@@ -11,6 +11,10 @@ id_rsa*
 .DS_Store
 DS_Store
 
+# Python cache
+__pycache__/
+*.py[cod]
+
 # Obsidian cache
 config/obsidian/workspace.json
 config/obsidian/workspace-mobile.json

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dify Debug"
+  short_description: "Debug and verify Dify workflow or chatflow DSL"
+  default_prompt: "Use $dify-debug to debug and verify Dify workflow or chatflow DSL."

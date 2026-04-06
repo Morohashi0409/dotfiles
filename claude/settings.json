@@ -159,6 +159,17 @@
             "command": "~/.claude/hooks/notification.sh"
           }
         ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/obsidian-session-log.sh",
+            "async": true,
+            "statusMessage": "Obsidian にセッションログを記録中..."
+          }
+        ]
       }
     ]
   },

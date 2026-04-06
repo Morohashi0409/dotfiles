@@ -1,0 +1,4 @@
+interface:
+  display_name: "Portable Skills"
+  short_description: "Create or retrofit a skill so a shared SKILL.md works"
+  default_prompt: "Use $portable-skills to create or retrofit a skill so a shared SKILL.md works in both Claude Code and Codex."

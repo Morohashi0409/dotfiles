@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dify Workflow"
+  short_description: "Build or edit Dify Workflow DSL for single-turn apps"
+  default_prompt: "Use $dify-workflow to build or edit Dify Workflow DSL for single-turn apps."

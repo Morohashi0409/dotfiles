@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dify Chatbot"
+  short_description: "Build or edit Dify chatflow DSL for conversational bots"
+  default_prompt: "Use $dify-chatbot to build or edit Dify chatflow DSL for conversational bots."

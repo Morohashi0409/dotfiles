@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rasisa X Posting"
+  short_description: "Create, review, or optimize X (Twitter) posts"
+  default_prompt: "Use $rasisa-x-posting to create, review, or optimize X (Twitter) posts for the RASHISA project."

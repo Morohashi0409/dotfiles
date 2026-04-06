@@ -1,0 +1,4 @@
+interface:
+  display_name: "Note Impact Checker"
+  short_description: "Use when reviewing or optimizing a note article for open"
+  default_prompt: "Use $note-impact-checker to use when reviewing or optimizing a note article for open rate, read completion, saves, trust, and follow-through; especially for RASHISA note drafts that should feel natural on note rather than X or SEO-only media."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dify Rag"
+  short_description: "Build or edit Dify RAG workflows and DSL"
+  default_prompt: "Use $dify-rag to build or edit Dify RAG workflows and DSL."
