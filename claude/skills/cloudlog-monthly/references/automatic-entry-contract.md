@@ -28,11 +28,9 @@ The user should provide or already have the following:
 - one Outlook or Teams calendar PDF for the month
 - any category or my-pattern changes that affect CloudLog category selection
 
-For automatic entry, the user must also prepare:
+For automatic entry, the skill handles Chrome startup automatically. The user only needs:
 
-- Chrome started with remote debugging enabled
-- a logged-in CloudLog session
-- the CloudLog timesheet page open
+- a logged-in CloudLog session (log in after Chrome opens if the login page appears)
 
 The user does not need to rename the PDFs manually. The skill should prefer attached file paths first, then canonical monthly files, then `~/Downloads`.
 
@@ -45,7 +43,7 @@ Before automatic entry, the minimum checklist is:
 - attendance PDF exists
 - calendar PDF exists
 - CloudLog category mapping has not silently changed
-- CloudLog is open and logged in
+- CloudLog is logged in (skill opens Chrome automatically; user only logs in if the login page appears)
 
 If any item is missing, stop and ask instead of guessing.
 

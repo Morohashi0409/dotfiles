@@ -39,6 +39,7 @@
     },
     "explorer.compactFolders": false,
     "remote.SSH.remotePlatform": {
-        "wellcom": "linux"
+        "wellcom": "linux",
+        "WellCom_backend2026": "linux"
     }
 }

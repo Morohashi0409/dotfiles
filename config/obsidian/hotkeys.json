@@ -8,5 +8,14 @@
       "key": "T"
     }
   ],
-  "workspace:close-window": []
+  "workspace:close-window": [],
+  "remove-newlines:paste-without-blank-lines": [
+    {
+      "modifiers": [
+        "Mod",
+        "Shift"
+      ],
+      "key": "V"
+    }
+  ]
 }

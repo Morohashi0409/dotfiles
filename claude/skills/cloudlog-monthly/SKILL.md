@@ -33,6 +33,10 @@ Before doing work, read these files in order:
 - Keep user-facing handoff templates in the external CloudLog documents, not in this skill.
 - If category mappings or my-patterns changed, ask the user instead of inventing new mappings.
 - If WellCom, one-platform, or アドモニ appears in the evidence, re-read the external category guide before classifying.
+- For DXP classification, use strict defaults unless the user overrides:
+  - `DXP【DX開発部】 > 会議（商品付.. > 入力不要 > 企業登録なし` only for `DXP開発定例`.
+  - `DXP【DX開発部】 > システム運用・作業 > 入力不要 > 企業登録なし` only when evidence explicitly says `保守`.
+  - Otherwise use `【資産化】ワンプラットフォーム> DXP > 入力不要 > 企業登録なし`.
 - When writing or updating team-facing docs, summarize local-only external rules inside this skill directory instead of assuming teammates can open `/Users/...` paths.
 
 ## Use This Skill
@@ -68,6 +72,10 @@ Before doing work, read these files in order:
 3. Check readiness with `scripts/check_monthly_inputs.py`.
 4. Generate or update `monthly-json/YYYY-MM_cloudlog.json`.
    - Use Daily notes, the attendance PDF, the Outlook calendar PDF, GitHub activity, and the category guide.
+   - Even if the user does not provide ticket numbers, fetch GitHub day activity per workday before final classification:
+     - `python3 scripts/fetch_github_day_activity.py YYYY-MM-DD`
+     - Default scope is `Resily/dxp` and `Resily/WellCom` for actor `Morohashi0409`.
+   - If the fetched GitHub activity shows WellCom PR merge/update on the day, allocate a WellCom block unless stronger contradictory evidence exists.
    - Do not invent project category strings inside this skill. Read them from the category guide.
    - Keep the input JSON minimal, but preserve `time_blocks`.
    - Before handing the JSON to CloudLog, normalize it to CloudLog-ready 5-minute increments.
@@ -78,10 +86,21 @@ Before doing work, read these files in order:
    - Keep `attendance: null` for full-leave days when no attendance time should be entered.
 5. Validate the JSON with `validate_json.py`.
 6. If the user wants automatic entry, use `cloudlog_automator.py`.
-   - The user must already be logged into CloudLog in a Chrome debug session and have the timesheet page available.
+   - Start Chrome with remote debugging automatically using the full path (do NOT ask the user to do this):
+     ```bash
+     bash "/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/open_cloudlog_debug_chrome.sh" &
+     ```
+     Wait ~8 seconds, then run the readiness check. The script is NOT in PATH; always use the full path.
+   - If the readiness check shows the login page, ask the user to log in, then wait for confirmation.
    - Read the automation and JSON contract if there is any doubt about field meaning or automator behavior.
+   - **Before running the automator, always filter out already-entered dates.**
+     - Run `scripts/filter_pending_dates.py YYYY-MM --out monthly-json/YYYY-MM_pending.json`.
+     - If the pending file is empty (all done), skip the automator entirely.
+     - Run the automator against `YYYY-MM_pending.json`, not the full monthly JSON.
    - Run the readiness check before the automation.
-   - Run the automation against the generated monthly JSON.
+   - After the automator completes, record the successfully entered dates:
+     - Run `scripts/filter_pending_dates.py YYYY-MM --mark-done DATE1 DATE2 ...` for each success.
+     - On a clean full-month run, mark all non-failed dates as done.
    - Confirm that the month saved successfully, or isolate the failed days and ask the user only when the automation cannot recover.
    - Do not fall back to manual browser clicking unless the user explicitly asks.
 
@@ -92,7 +111,7 @@ Before doing work, read these files in order:
 - One attendance PDF for that month.
 - One Outlook or Teams calendar PDF for that month.
 - Any category or my-pattern changes that happened since the previous run.
-- For automatic entry, a logged-in Chrome debug session on CloudLog's timesheet page.
+- For automatic entry, a logged-in CloudLog session (Chrome is started automatically by the skill).
 
 See [docs/user-preparation.md](docs/user-preparation.md) for a role-based breakdown of what the monthly requester, environment owner, and CloudLog maintainer should each keep up to date.
 
@@ -117,10 +136,23 @@ If the user attaches the PDFs in the thread, use those first. If not, look in `~
 ## Commands
 
 ```bash
+# Chrome をデバッグモードで起動（フルパス必須・PATHに存在しない）
+bash "/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/open_cloudlog_debug_chrome.sh" &
+# ↑ 実行後 ~8秒待ってから readiness check を行う
+
 python3 /Users/resily0808/dotfiles/claude/skills/cloudlog-monthly/scripts/prepare_monthly_sources.py 2026-03
 python3 /Users/resily0808/dotfiles/claude/skills/cloudlog-monthly/scripts/check_monthly_inputs.py 2026-03
-python3 /Users/resily0808/dotfiles/claude/skills/cloudlog-monthly/scripts/normalize_cloudlog_json.py /Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/monthly-json/2026-03_cloudlog.json --in-place
-python3 /Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/validate_json.py /Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/monthly-json/2026-03_cloudlog.json
-python3 /Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/check_cloudlog_automator_ready.py 2026-03
-python3 /Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/cloudlog_automator.py /Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/monthly-json/2026-03_cloudlog.json
+python3 /Users/resily0808/dotfiles/claude/skills/cloudlog-monthly/scripts/normalize_cloudlog_json.py "/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/monthly-json/2026-03_cloudlog.json" --in-place
+python3 "/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/validate_json.py" "/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/monthly-json/2026-03_cloudlog.json"
+python3 "/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/check_cloudlog_automator_ready.py" 2026-03
+
+# 未入力分のみ抽出してから実行（再実行時も同様）
+python3 /Users/resily0808/dotfiles/claude/skills/cloudlog-monthly/scripts/filter_pending_dates.py 2026-03 --out "/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/monthly-json/2026-03_pending.json"
+python3 "/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/cloudlog_automator.py" "/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/monthly-json/2026-03_pending.json"
+
+# 成功した日付を完了記録に追記
+python3 /Users/resily0808/dotfiles/claude/skills/cloudlog-monthly/scripts/filter_pending_dates.py 2026-03 --mark-done 2026-03-01 2026-03-02  # ...成功日を列挙
+
+# 完了済み日付の確認
+python3 /Users/resily0808/dotfiles/claude/skills/cloudlog-monthly/scripts/filter_pending_dates.py 2026-03 --show-done
 ```

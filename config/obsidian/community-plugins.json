@@ -4,7 +4,6 @@
   "templater-obsidian",
   "calendar",
   "obsidian-outliner",
-  "obsidian-tasks-plugin",
   "obsidian-git",
   "obsidian-memos",
   "quickadd",
@@ -15,5 +14,5 @@
   "obsidian-mind-map",
   "marp-slides",
   "soundscapes",
-  "obsidian-textgenerator-plugin"
+  "remove-newlines"
 ]

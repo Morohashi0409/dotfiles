@@ -1,0 +1,92 @@
+---
+description: Cursor 全プロジェクト共通の運用ガイドライン（Obsidian AI-OS 連携含む）
+alwaysApply: true
+---
+
+# Cursor グローバル運用ガイドライン
+
+このルールは `~/dotfiles/cursor/rules/00-global.mdc` として管理され、
+symlink で `~/.cursor/rules/00-global.mdc` に配置される。
+すべてのプロジェクトで Cursor Agent に適用される。
+
+---
+
+## コミュニケーション方針
+
+- 出力は日本語で行うこと
+- 技術的に誤った意見には根拠を示して反論すること
+- 指示が曖昧な場合は推測せず、明確化を求めること
+- 設計・レビューは分割せず、完全な形で一度に提出すること
+
+---
+
+## 実装規律
+
+- 初回実装時にバリデーション（範囲制約・境界値・型チェック）を組み込む
+- コミット前に linter・型チェック・フォーマット・テストを実行する
+- 3 ステップ以上のタスクは実行前に計画フェーズを設け、承認を得てから着手する（Intent Guard）
+
+---
+
+## Git・Agent 管理
+
+- `git worktree` 使用時は作業ディレクトリの確認が必須
+- マルチエージェント調整では明示的なスコープと完了条件を設定し、作業の重複を防ぐ
+- スキル呼び出し時は該当スキルのみ実行し、暗黙的なピボットは禁止
+
+---
+
+## Obsidian AI-OS 自動参照（認識齟齬と反復指摘の防止）
+
+Obsidian Vault `00_AI-OS/` の情報を以下 3 スキルで参照・追記する。
+**該当タイミングで必ず該当スキルを呼び出すこと。**
+
+| タイミング | 呼び出すスキル | 役割 |
+|---|---|---|
+| 着手直前 | `read-project-memory` | `Global.md` / `Projects/<project>/Rules.md` / `Feedback.md` を読み、遵守 3 点・禁止 3 点を提示 |
+| 会話中（訂正検知時） | `log-feedback` | ユーザーの「違う」「〜しないで」等を検知し `Projects/<project>/Feedback.md` 最上部に追記 |
+| 会話末尾（持続作業後） | `thread-memory` | feedback / rules / learnings を仕分けて `Feedback.md` / `Rules.md` / `Global.md` へ追記 |
+
+### 動作規範
+
+- `read-project-memory` は実作業（実装・設計・デバッグ・編集・調査）の**最初のアクション前**に 1 回だけ起動。挨拶・雑談・単発 Q&A では起動しない
+- `log-feedback` は検知精度を優先し、誤検知したら黙って本題を続ける（ユーザーに確認しない）
+- `thread-memory` は `log-feedback` が既に書いた指摘を重複チェックで skip するため、両方走らせて良い
+- ユーザーが「読まなくていい」「スキップ」と明言した場合は `read-project-memory` を起動しない
+
+### Vault の絶対パス
+
+- Root: `/Users/resily0808/Documents/Obsidian Vault`
+- AI-OS: `00_AI-OS/`
+  - `Global.md`（全プロジェクト共通）
+  - `Projects/<project>/Rules.md` `Feedback.md`（プロジェクト固有）
+  - `00_Guide.md`（人間向け運用ガイド）
+
+---
+
+## スキル一覧（Cursor で利用可能な共有 skill）
+
+`~/.cursor/skills-cursor/` に dotfiles からの symlink で配置される。
+SKILL.md は Claude と完全に同じファイル（symlink 共有）。
+
+| スキル | 用途 |
+|--------|------|
+| `read-project-memory` | 着手前に Obsidian AI-OS の Global.md / Rules.md / Feedback.md を読み込む |
+| `log-feedback` | 会話中の訂正を即座に `Projects/<project>/Feedback.md`（5 タグ付き）の最上部に記録 |
+| `thread-memory` | 会話末尾に feedback / rules / learnings を仕分けて `Feedback.md` / `Rules.md` / `Global.md` へ追記 |
+
+**新規スキルを追加したら** `bash ~/dotfiles/cursor/setup.sh` を実行し、`~/.cursor/skills-cursor/` の symlink を張り直すこと。
+
+---
+
+## MCP
+
+`~/.cursor/mcp.json` で Puppeteer 等の MCP サーバーを定義。プロジェクト固有のものは各リポジトリの `.cursor/mcp.json` を参照。
+
+---
+
+## セッション開始時のチェックリスト
+
+1. `git log --oneline -5` で最新コミットを確認
+2. プロジェクトの README / 主要ドキュメントを読む
+3. 該当プロジェクトが Obsidian AI-OS に登録されていれば `read-project-memory` を起動

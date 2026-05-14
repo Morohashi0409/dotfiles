@@ -29,11 +29,11 @@ If the requester wants to operate mainly by chat, see `docs/conversation-guide.m
 
 The environment owner should keep ready:
 
-- Chrome started with remote debugging enabled
-- a logged-in CloudLog session
-- the CloudLog timesheet page open
+- a logged-in CloudLog session (Chrome is started automatically by the skill using the script at `/Users/resily0808/Documents/Obsidian Vault/04_Document/2_Process/CloudLog/open_cloudlog_debug_chrome.sh`)
 - Playwright and Chromium installed when required
 - the external runtime scripts available and runnable
+
+Note: The skill runs the Chrome debug startup script automatically. The user only needs to log in if the login page appears after Chrome opens.
 
 ## Operations Maintainer
 

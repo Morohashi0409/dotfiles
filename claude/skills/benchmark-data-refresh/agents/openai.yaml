@@ -1,0 +1,4 @@
+interface:
+  display_name: "Benchmark Data Refresh"
+  short_description: "Use when annual benchmark average data must be refreshed safely end-to-end"
+  default_prompt: "Use $benchmark-data-refresh to refresh WellCom benchmark data (Excel to DB to mapping to JSON to slide verification) without regression."

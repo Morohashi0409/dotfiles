@@ -3,74 +3,58 @@
   "lines": [
     [
       {
-        "id": "model",
+        "id": "1",
         "type": "model",
         "color": "cyan"
       },
       {
-        "id": "sep1",
+        "id": "2",
         "type": "separator"
       },
       {
-        "id": "ctx-pct",
-        "type": "context-percentage-usable",
-        "color": "yellow"
+        "id": "3",
+        "type": "context-length",
+        "color": "brightBlack"
       },
       {
-        "id": "sep2",
+        "id": "4",
         "type": "separator"
       },
       {
-        "id": "tokens-total",
-        "type": "tokens-total",
-        "color": "magenta"
-      },
-      {
-        "id": "sep3",
-        "type": "separator"
-      },
-      {
-        "id": "cost",
-        "type": "session-cost",
-        "color": "green"
-      },
-      {
-        "id": "sep4",
-        "type": "separator"
-      },
-      {
-        "id": "clock",
-        "type": "session-clock",
-        "color": ""
-      },
-      {
-        "id": "flex",
-        "type": "flex-separator"
-      },
-      {
-        "id": "git-branch",
+        "id": "5",
         "type": "git-branch",
         "color": "magenta"
       },
       {
-        "id": "sep5",
+        "id": "6",
         "type": "separator"
       },
       {
-        "id": "git-changes",
+        "id": "7",
         "type": "git-changes",
         "color": "yellow"
-      },
-      {
-        "id": "sep6",
-        "type": "separator"
-      },
-      {
-        "id": "cwd",
-        "type": "current-working-dir",
-        "color": "blue"
       }
-    ]
+    ],
+    [],
+    []
   ],
-  "flexMode": "full-minus-40"
+  "flexMode": "full-minus-40",
+  "compactThreshold": 60,
+  "colorLevel": 2,
+  "inheritSeparatorColors": false,
+  "globalBold": false,
+  "minimalistMode": false,
+  "powerline": {
+    "enabled": false,
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
+    "startCaps": [],
+    "endCaps": [],
+    "autoAlign": false,
+    "continueThemeAcrossLines": false
+  }
 }
