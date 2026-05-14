@@ -10,12 +10,14 @@
 #   2. .zprofile
 #   3. changelog.config.js
 #   4. .gitconfig
-#   5. .claude.json
-#   6. .wezterm.lua（存在する場合のみ）
-#   7. config/cursor/settings.json → ~/Library/Application Support/Cursor/User/settings.json
-#   8. config/obsidian/ → ~/Documents/Obsidian Vault/.obsidian（ディレクトリごとリンク）
-#   9. Claude 関連は claude/setup.sh に委任
-#   10. Codex skills 関連は codex/setup.sh に委任
+#   5. config/wezterm/wezterm.lua → ~/.config/wezterm/wezterm.lua
+#   6. config/cursor/settings.json → ~/Library/Application Support/Cursor/User/settings.json
+#   7. config/obsidian/ → ~/Documents/Obsidian Vault/.obsidian（ディレクトリごとリンク）
+#   8. Claude 関連は claude/setup.sh に委任
+#   9. Codex skills 関連は codex/setup.sh に委任
+#
+# 注意: ~/.claude.json は Claude Code のランタイム状態 (oauthAccount/userID/会話履歴) を
+#       保持するためマシン固有として扱い、dotfiles では管理しない。
 
 set -euo pipefail
 
@@ -74,19 +76,16 @@ backup_and_link "$DOTFILES/changelog.config.js" "$HOME/changelog.config.js"
 # 4. .gitconfig
 backup_and_link "$DOTFILES/.gitconfig" "$HOME/.gitconfig"
 
-# 5. .claude.json
-backup_and_link "$DOTFILES/.claude.json" "$HOME/.claude.json"
+# 5. WezTerm 設定
+backup_and_link "$DOTFILES/config/wezterm/wezterm.lua" "$HOME/.config/wezterm/wezterm.lua"
 
-# 6. .wezterm.lua（存在する場合のみ）
-backup_and_link "$DOTFILES/.wezterm.lua" "$HOME/.wezterm.lua"
-
-# 7. Cursor settings.json
+# 6. Cursor settings.json
 backup_and_link "$DOTFILES/config/cursor/settings.json" "$HOME/Library/Application Support/Cursor/User/settings.json"
 
-# 8. Obsidian 設定ディレクトリ（ディレクトリごとリンク）
+# 7. Obsidian 設定ディレクトリ（ディレクトリごとリンク）
 backup_and_link "$DOTFILES/config/obsidian" "$HOME/Documents/Obsidian Vault/.obsidian"
 
-# 9. Claude 関連は claude/setup.sh に委任
+# 8. Claude 関連は claude/setup.sh に委任
 if [[ -f "$DOTFILES/claude/setup.sh" ]]; then
   echo ""
   bash "$DOTFILES/claude/setup.sh"
@@ -94,7 +93,7 @@ else
   log_skip "claude/setup.sh が見つかりません"
 fi
 
-# 10. Codex skills 関連は codex/setup.sh に委任
+# 9. Codex skills 関連は codex/setup.sh に委任
 if [[ -f "$DOTFILES/codex/setup.sh" ]]; then
   echo ""
   bash "$DOTFILES/codex/setup.sh"
