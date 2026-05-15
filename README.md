@@ -109,9 +109,14 @@ dotfiles/
 │   ├── claude-profiles.zsh    #   claude-personal / claude-arm の起動関数
 │   └── workspaces.zsh         #   dxp / wellcom / dotfiles など、cd ヘルパー + wz 起動
 │
-├── docs/                      # 詳細ドキュメント・監査ノート
+├── docs/                      # 詳細ドキュメント・設計メモ・監査ノート
+├── skills-lock.json           # 外部 skill (canvas-design / polish) のバージョンロック
 └── tests/                     # スキル・スクリプトのテスト
 ```
+
+> **`.agents/` / `.kiro/` / `.claude/` はリポジトリに含まれません。**
+> Claude Code および Kiro が `skills-lock.json` を元に自動で `~/dotfiles/.agents/skills/`
+> 配下に外部 skill を取得します（再現性は lock ファイルで担保）。
 
 ---
 
@@ -349,6 +354,7 @@ codex login
 - `.env`, `*.pem`, `id_rsa*`, `*.key`
 - **`.claude.json`** — Claude Code のランタイム状態。`oauthAccount`（emailAddress / accountUuid）、`userID`、MCP サーバー定義、プロジェクト履歴、会話統計を含むため絶対に共有しません
 - **`.claude/`** — ローカルキャッシュ（`handover/` / `settings.local.json` / プロジェクト固有 skill 等）
+- **`.agents/`, `.kiro/`** — Claude Code / Kiro が外部から取得する skill のローカルキャッシュ。`skills-lock.json` で版を固定しているので Claude Code 起動時に自動再取得されます
 - `__pycache__/`, `*.py[cod]`
 - `.DS_Store`
 - `config/obsidian/workspace.json`, `workspace-mobile.json`

@@ -12,6 +12,11 @@ id_rsa*
 .claude.json.backup
 .claude/
 
+# External agent skills installed by Claude/Kiro plugin systems
+# (canvas-design / polish etc. — re-installable from skills-lock.json)
+.agents/
+.kiro/
+
 # OS
 .DS_Store
 DS_Store
