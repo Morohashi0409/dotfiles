@@ -31,3 +31,10 @@ config/obsidian/workspace-mobile.json
 
 # Obsidian plugin settings with local API credentials
 config/obsidian/plugins/obsidian-textgenerator-plugin/data.json
+
+# Obsidian community plugin bodies (re-downloaded by Obsidian itself from
+# community-plugins.json). Keep only each plugin's data.json (user settings).
+config/obsidian/plugins/**
+!config/obsidian/plugins/
+!config/obsidian/plugins/*/
+!config/obsidian/plugins/*/data.json
